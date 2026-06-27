@@ -126,4 +126,94 @@ const createManyActivities = async (req, res) => {
   }
 };
 
-export { getActivity, createManyActivities, register, login };
+const updateActivity = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const activity = await Activity.findById(id);
+
+    if (!activity) {
+      return res.status(404).json({
+        success: false,
+        message: "Activity not found",
+      });
+    }
+    activity.metadata = {
+      title: req.body.metadata?.title ?? activity.metadata.title,
+      description:
+        req.body.metadata?.description ?? activity.metadata.description,
+    };
+
+    await activity.save();
+
+    res.status(200).json({
+      success: true,
+      data: activity,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const deleteActivity = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const activity = await Activity.findById(id);
+
+    if (!activity) {
+      return res.status(404).json({
+        success: false,
+        message: "Activity not found",
+      });
+    }
+
+    await Activity.findByIdAndDelete(id);
+
+
+    res.status(200).json({
+      success: true,
+      message: "Activity deleted successfully",
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const getActivityById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const activity = await Activity.findById(id);
+
+    if (!activity) {
+      return res.status(404).json({
+        success: false,
+        message: "Activity not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: activity,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+export { getActivity, createManyActivities, register, login , updateActivity ,deleteActivity ,getActivityById };

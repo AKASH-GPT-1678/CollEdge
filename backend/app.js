@@ -7,9 +7,12 @@ import { Server } from "socket.io";
 import {
 
   createManyActivities,
+  deleteActivity,
   getActivity,
+  getActivityById,
   login,
   register,
+  updateActivity,
 } from "./controllers/activity.controller.js";
 import http from "http"
 
@@ -94,4 +97,9 @@ app
 app.post("/register" , register);
 app.post("/login" , login);
 
+app.put("/update/:id" , updateActivity);
+app.delete("/delete/:id" , deleteActivity);
+
+
+app.get("/activity_id/:id" , getActivityById)
 export default server;

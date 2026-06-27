@@ -15,7 +15,7 @@ const ActivityFeed = () => {
     typeof window !== "undefined" ? localStorage.getItem("tenant-id") : null;
 
   const [activity, setActivity] = React.useState<Activity[]>([]);
-  const endpoint = process.env.NEXT_PUBLIC_ENDPOINT;
+   const endpoint = process.env.NEXT_PUBLIC_ENDPOINT ?? "http://localhost:3000";
   const router = useRouter();
   const socketRef = React.useRef<Socket | null>(null);
 
@@ -136,6 +136,7 @@ const ActivityFeed = () => {
           <div
             key={index}
             className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6 shadow-lg transition duration-300 hover:border-zinc-700 hover:-translate-y-1"
+            onClick={()=>router.push(`activity/${activity._id}`)}
           >
             {/* Top */}
             <div className="mb-5 flex items-center gap-4">

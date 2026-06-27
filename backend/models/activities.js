@@ -24,8 +24,14 @@ const activitySchema = new mongoose.Schema(
       required: true,
     },
     metadata: {
-      type: Object,
-      default: {},
+      title: {
+        type: String,
+        default: "",
+      },
+      description: {
+        type: String,
+        default: "",
+      },
     },
   },
   {
