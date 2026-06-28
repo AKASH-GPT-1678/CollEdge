@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      "https://dmaq.vercel.app",
+     "https://coll-edge-zeta.vercel.app",
       "http://localhost:3001",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
