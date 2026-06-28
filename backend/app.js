@@ -4,6 +4,11 @@ import router from "./routes/router.js";
 import cors from "cors";
 import Activity from "./models/activities.js";
 import { Server } from "socket.io";
+import dotenv from "dotenv";
+
+
+dotenv.config();
+
 import {
 
   createManyActivities,
@@ -16,11 +21,12 @@ import {
 } from "./controllers/activity.controller.js";
 import http from "http"
 
+const frontendEndpoint = process.env.FRONTEND_URi;
 app.use(express.json());
 app.use(
   cors({
     origin: [
-     "https://coll-edge-zeta.vercel.app",
+     frontendEndpoint,
       "http://localhost:3001",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -33,13 +39,14 @@ const io = new Server(server, {
   cors: {
     origin: [
       "http://localhost:3001",
-      "https://dmaq.vercel.app"
+      frontendEndpoint
     ],
     methods: ["GET", "POST"]
   }
 });
 io.on("connection", (socket) => {
   console.log("Connected:", socket.id);
+
 
   socket.on("disconnect", (reason) => {
     console.log("Disconnected:", socket.id);
